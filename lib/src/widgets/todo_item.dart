@@ -1,11 +1,11 @@
 part of '../home.dart';
 
-class _TodoItem extends HookConsumerWidget {
+class _TodoItem extends HookConsumerWidget with HomeState, HomeEvent {
   const _TodoItem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final todo = ref.watch(currentTodo);
+    final todo = selectedTodo(ref);
     final itemFocusNode = useFocusNode();
     final itemIsFocused = useIsFocused(itemFocusNode);
 
@@ -17,24 +17,19 @@ class _TodoItem extends HookConsumerWidget {
       elevation: 6,
       child: Focus(
         focusNode: itemFocusNode,
-        onFocusChange: (focused) {
-          if (focused) {
-            textEditingController.text = todo.description;
-          } else {
-            ref
-                .read(todoListProvider.notifier)
-                .edit(id: todo.id, description: textEditingController.text);
-          }
-        },
+        onFocusChange: (focused) => onTodoListTileFocusChanged(
+          ref,
+          isFocused: focused,
+          textEditingController: textEditingController,
+          selectedTodo: todo,
+        ),
         child: ListTile(
-          onTap: () {
-            itemFocusNode.requestFocus();
-            textFieldFocusNode.requestFocus();
-          },
+          onTap: () => onTodoListTileTapped(
+              textFieldFocusNode: textFieldFocusNode,
+              itemFocusNode: itemFocusNode),
           leading: Checkbox(
             value: todo.completed,
-            onChanged: (value) =>
-                ref.read(todoListProvider.notifier).toggle(todo.id),
+            onChanged: (value) => onCheckBoxTapped(ref, todoId: todo.id),
           ),
           title: itemIsFocused
               ? TextField(

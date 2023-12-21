@@ -1,17 +1,20 @@
 part of '../home.dart';
 
-class _Toolbar extends HookConsumerWidget {
+class _Toolbar extends HookConsumerWidget with HomeState, HomeEvent {
   const _Toolbar({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final filter = ref.watch(todoListFilter);
+    final filter = filterCategory(ref);
 
     Color? textColorFor(TodoListFilter value) {
       return filter == value ? Colors.blue : Colors.black;
     }
+
+    print(activeTodosCount(ref).runtimeType);
+    print(activeTodosCount.runtimeType);
 
     return Material(
       child: Row(
@@ -19,7 +22,7 @@ class _Toolbar extends HookConsumerWidget {
         children: [
           Expanded(
             child: Text(
-              '${ref.watch(uncompletedTodosCount)} items left',
+              '${activeTodosCount(ref)} items left',
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -28,7 +31,7 @@ class _Toolbar extends HookConsumerWidget {
             message: 'All todos',
             child: TextButton(
               onPressed: () =>
-                  ref.read(todoListFilter.notifier).state = TodoListFilter.all,
+                  onCategoryBtnTapped(ref, filter: TodoListFilter.all),
               style: ButtonStyle(
                 visualDensity: VisualDensity.compact,
                 foregroundColor:
@@ -41,8 +44,8 @@ class _Toolbar extends HookConsumerWidget {
             key: activeFilterKey,
             message: 'Only uncompleted todos',
             child: TextButton(
-              onPressed: () => ref.read(todoListFilter.notifier).state =
-                  TodoListFilter.active,
+              onPressed: () =>
+                  onCategoryBtnTapped(ref, filter: TodoListFilter.active),
               style: ButtonStyle(
                 visualDensity: VisualDensity.compact,
                 foregroundColor: MaterialStateProperty.all(
@@ -56,8 +59,8 @@ class _Toolbar extends HookConsumerWidget {
             key: completedFilterKey,
             message: 'Only completed todos',
             child: TextButton(
-              onPressed: () => ref.read(todoListFilter.notifier).state =
-                  TodoListFilter.completed,
+              onPressed: () =>
+                  onCategoryBtnTapped(ref, filter: TodoListFilter.completed),
               style: ButtonStyle(
                 visualDensity: VisualDensity.compact,
                 foregroundColor: MaterialStateProperty.all(
