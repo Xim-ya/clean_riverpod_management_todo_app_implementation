@@ -13,7 +13,7 @@ void main() {
   test('Add todo', () {
     final container = createContainer();
     const String todoDescription = 'Write Riverpod Test Code';
-    homeEvent.onTodoSubmitted(container,
+    homeEvent.addTodo(container,
         textEditingController: TextEditingController(), value: todoDescription);
 
     expect(
@@ -23,7 +23,7 @@ void main() {
   test('Remove todo', () {
     final container = createContainer();
     final selectedTodo = homeState.filteredTodos(container).last;
-    homeEvent.onTodoDismissed(container, selectedTodo: selectedTodo);
+    homeEvent.removeTodo(container, selectedTodo: selectedTodo);
 
     expect(
         homeState
@@ -35,7 +35,7 @@ void main() {
   test('change todo state', () {
     final container = createContainer();
     final selectedTodo = homeState.filteredTodos(container).last;
-    homeEvent.onCheckBoxTapped(container, todoId: selectedTodo.id);
+    homeEvent.toggleTodoState(container, todoId: selectedTodo.id);
 
     expect(
         homeState
@@ -49,16 +49,16 @@ void main() {
     /// remove last element of todoList
     final container = createContainer();
     final removedTodo = homeState.filteredTodos(container).last;
-    homeEvent.onTodoDismissed(container, selectedTodo: removedTodo);
+    homeEvent.removeTodo(container, selectedTodo: removedTodo);
 
     /// add todo
     const String todoDescription = 'Write Riverpod Test Code';
-    homeEvent.onTodoSubmitted(container,
+    homeEvent.addTodo(container,
         textEditingController: TextEditingController(), value: todoDescription);
 
     /// change todo state
     final targetTodo = homeState.filteredTodos(container).last;
-    homeEvent.onCheckBoxTapped(container, todoId: targetTodo.id);
+    homeEvent.toggleTodoState(container, todoId: targetTodo.id);
 
     expect(
         homeState

@@ -1,19 +1,31 @@
 import 'package:clean_riverpod_management/src/constants/todo_list_filter.dart';
 import 'package:clean_riverpod_management/src/model/todo.dart';
 import 'package:clean_riverpod_management/src/providers/current_todo_provider.dart';
+import 'package:clean_riverpod_management/src/providers/filtered_todos_provider.dart';
 import 'package:clean_riverpod_management/src/providers/todo_list_filter.dart';
-import 'package:clean_riverpod_management/src/providers/todo_list_provider.dart';
-import 'package:clean_riverpod_management/src/providers/umcompleted_todo_count_provider.dart';
+import 'package:clean_riverpod_management/src/providers/uncompleted_todo_count_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 mixin class HomeState {
-  List<Todo> targetTodos(WidgetRef ref) => ref.watch(todoListProvider);
+  ///
+  /// Count of uncompleted todos.
+  ///
+  int uncompletedTodosCount(WidgetRef ref) =>
+      ref.watch(uncompletedTodosCountProvider);
 
-  Todo selectedTodo(WidgetRef ref) => ref.watch(currentTodo);
+  ///
+  /// List of filtered todos.
+  ///
+  List<Todo> filteredTodos(WidgetRef ref) => ref.watch(filteredTodosProvider);
 
-  int activeTodosCount(WidgetRef ref) => ref.watch(uncompletedTodosCount);
+  ///
+  /// Current todo. (Todo witch is focused)
+  ///
+  Todo currentTodo(WidgetRef ref) => ref.watch(currentTodoProvider);
 
-  int activeTodosCountTest(WidgetRef ref) => ref.watch(uncompletedTodosCount);
-
-  TodoListFilter filterCategory(WidgetRef ref) => ref.watch(todoListFilter);
+  ///
+  /// Current filter category for the todo list.
+  ///
+  TodoListFilter todoListFilter(WidgetRef ref) =>
+      ref.watch(todoListFilterProvider);
 }

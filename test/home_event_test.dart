@@ -6,7 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 mixin class HomeEventTest {
-  void onTodoSubmitted(
+  ///
+  /// Add a new todo to the list and clear the text input field.
+  ///
+  void addTodo(
     ProviderContainer container, {
     required TextEditingController textEditingController,
     required String value,
@@ -15,28 +18,43 @@ mixin class HomeEventTest {
     textEditingController.clear();
   }
 
-  void onTodoDismissed(ProviderContainer container,
-      {required Todo selectedTodo}) {
+  ///
+  /// Remove the selected todo from the list.
+  ///
+  void removeTodo(ProviderContainer container, {required Todo selectedTodo}) {
     container.read(todoListProvider.notifier).remove(selectedTodo);
   }
 
-  void onFilterBtnTapped(ProviderContainer container,
-      {required TodoListFilter filter}) {
-    container.read(todoListFilterProvider.notifier).state = filter;
-  }
-
-  void onCheckBoxTapped(ProviderContainer container, {required String todoId}) {
-    container.read(todoListProvider.notifier).toggle(todoId);
-  }
-
-  void onTodoListTileTapped(
+  ///
+  /// Request focus for the text input field and item focus node.
+  ///
+  void requestTextFieldsFocus(
       {required FocusNode textFieldFocusNode,
       required FocusNode itemFocusNode}) {
     itemFocusNode.requestFocus();
     textFieldFocusNode.requestFocus();
   }
 
-  void onTodoListTileFocusChanged(ProviderContainer container,
+  ///
+  /// Change the filter category for the todo list.
+  ///
+  void changeFilterCategory(ProviderContainer container,
+      {required TodoListFilter filter}) {
+    container.read(todoListFilterProvider.notifier).state = filter;
+  }
+
+  ///
+  /// Toggle the state (completed/incomplete) of a todo.
+  ///
+  void toggleTodoState(ProviderContainer container, {required String todoId}) {
+    container.read(todoListProvider.notifier).toggle(todoId);
+  }
+
+  ///
+  /// Edit the description of a todo. If focused, set the description to the current value.
+  /// Otherwise, update the todo with the new description.
+  ///
+  void editTodoDesc(ProviderContainer container,
       {required bool isFocused,
       required TextEditingController textEditingController,
       required Todo selectedTodo}) {
