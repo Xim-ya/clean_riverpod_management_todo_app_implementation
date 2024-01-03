@@ -1,4 +1,4 @@
-import 'package:clean_riverpod_management/src/home_page.dart';
+import 'package:clean_riverpod_management/src/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

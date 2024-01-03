@@ -1,4 +1,4 @@
-part of '../home_page.dart';
+part of '../home.dart';
 
 class Title extends StatelessWidget {
   const Title({Key? key}) : super(key: key);

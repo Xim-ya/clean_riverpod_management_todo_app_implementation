@@ -1,4 +1,4 @@
-part of '../home_page.dart';
+part of '../home.dart';
 
 class Toolbar extends HookConsumerWidget with HomeState, HomeEvent {
   const Toolbar({
