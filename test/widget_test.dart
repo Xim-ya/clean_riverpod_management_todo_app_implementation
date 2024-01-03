@@ -6,7 +6,7 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:clean_riverpod_management/main.dart';
-import 'package:clean_riverpod_management/src/home.dart';
+import 'package:clean_riverpod_management/src/home_page.dart';
 import 'package:clean_riverpod_management/src/providers/todo_list_provider.dart';
 import 'package:clean_riverpod_management/src/test_keys.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
